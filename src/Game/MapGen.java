@@ -14,6 +14,8 @@ public class MapGen extends BasicGameState
 	private static int size;
 	private static int width, height;
 	
+	boolean climateShowing;
+	
 	static LandMap land;
     static ClimateMap climate;
 	
@@ -24,14 +26,22 @@ public class MapGen extends BasicGameState
 		width = 800;
 		height = 600;
 		land = new LandMap(width, height, size);
-        //climate = new ClimateMap(width, height, size);
+        climate = new ClimateMap(width, height, size);
+        climateShowing = false;
 		generateMap();
 	}
 	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
 	{
-		land.drawLandMap(g);
+		if(climateShowing)
+		{
+			climate.drawClimate(g);
+		}
+		else
+		{
+			land.drawLandMap(g);
+		}
 	}
 
 	@Override
@@ -57,6 +67,11 @@ public class MapGen extends BasicGameState
 			game.enterState(3);
 		}
 		
+		if(input.isKeyPressed(Input.KEY_C))
+		{
+			climateShowing = !climateShowing;
+		}
+		
 	}
 	
 
@@ -71,6 +86,7 @@ public class MapGen extends BasicGameState
 	{
 		int contnum = (int) ((Math.random() * 4) + 1);
 		land.genLand(contnum);
+		climate.genClimate();
 	}
 	
 	

@@ -288,4 +288,10 @@ public class LandMap
 		}
 	}
 	
+	
+	public int getElement(int r, int c)
+	{
+		return map[r][c];
+	}
+	
 }

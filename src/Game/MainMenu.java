@@ -41,7 +41,7 @@ public class MainMenu extends BasicGameState
 		
 		if(input.isKeyPressed(Input.KEY_Q))
 		{
-            music.fade(400, 0.1f, true);
+            music.fade(400, 0.01f, true);
             game.enterState(4, new FadeOutTransition(), new FadeInTransition());
 		}
 		

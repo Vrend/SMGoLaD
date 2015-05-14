@@ -32,7 +32,7 @@ public class CloseState extends BasicGameState
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException
     {
-        if(!MainMenu.music.playing())
+        if(MainMenu.music.getVolume() < 0.1f)
         {
             gameContainer.exit();
         }
