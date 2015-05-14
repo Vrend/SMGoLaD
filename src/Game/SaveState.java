@@ -98,7 +98,7 @@ public class SaveState extends BasicGameState
 		 if(move)
 		 {
 			 move = false;
-			 game.enterState(0);
+			 game.enterState(1);
 		 }
 		
 	}

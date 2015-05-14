@@ -42,17 +42,17 @@ public class MapGen extends BasicGameState
 		}
 		if(input.isKeyPressed(Input.KEY_Q))
 		{
-			container.exit();
+			game.enterState(0);
 		}
 		
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
-			game.enterState(1);
+			game.enterState(2);
 		}
 		
 		if(input.isKeyPressed(Input.KEY_L))
 		{
-			game.enterState(2);
+			game.enterState(3);
 		}
 		
 	}

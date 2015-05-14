@@ -28,6 +28,7 @@ public class GameC extends StateBasedGame
 		{
 			AppGameContainer container = new AppGameContainer(new GameC("Sid Meier's Game of Lords and Dragons"));
 			container.setDisplayMode(800, 600, false);
+			container.setIcon("icon.png");
 			container.start();
 		}
 		catch(SlickException e)
