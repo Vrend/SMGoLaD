@@ -15,6 +15,7 @@ public class MapGen extends BasicGameState
 	private static int width, height;
 	
 	static LandMap land;
+    static ClimateMap climate;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
@@ -23,6 +24,7 @@ public class MapGen extends BasicGameState
 		width = 800;
 		height = 600;
 		land = new LandMap(width, height, size);
+        //climate = new ClimateMap(width, height, size);
 		generateMap();
 	}
 	

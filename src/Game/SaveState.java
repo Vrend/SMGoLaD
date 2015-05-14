@@ -92,7 +92,7 @@ public class SaveState extends BasicGameState
 		 
 		 if(input.isKeyPressed(Input.KEY_Q))
 		 {
-			 game.enterState(0);
+			 game.enterState(1);
 		 }
 		 
 		 if(move)

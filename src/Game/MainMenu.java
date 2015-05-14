@@ -7,18 +7,18 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.*;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class MainMenu extends BasicGameState 
 {
-	Music music;
-	boolean close
+	static Music music;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
 	{
 		music = new Music("Rains.wav");
 		music.loop();
-		close = false;
 	}
 
 	@Override
@@ -28,6 +28,7 @@ public class MainMenu extends BasicGameState
 		
 		g.setColor(Color.red);
 		g.drawString("Sid Meier's Game of Lords and Dragons", 245, 30);
+
 		g.setColor(Color.white);
 		g.drawString("Press ENTER to continue", 300, 450);
 		
@@ -40,15 +41,9 @@ public class MainMenu extends BasicGameState
 		
 		if(input.isKeyPressed(Input.KEY_Q))
 		{
-        		 music.fade(4000, 0.1f, true);
-            		 close = true;
+            music.fade(400, 0.1f, true);
+            game.enterState(4, new FadeOutTransition(), new FadeInTransition());
 		}
-
-        	if(!music.playing() && close)
-        	{
-            		container.exit();
-        	}
-		
 		
 		//Only temporary so it can access load menu
 		if(input.isKeyPressed(Input.KEY_ENTER))
@@ -56,6 +51,11 @@ public class MainMenu extends BasicGameState
 			game.enterState(3);
 			
 		}
+
+        if(music.getVolume() < 1f)
+        {
+            music.setVolume(1f);
+        }
 	}
 
 	@Override
