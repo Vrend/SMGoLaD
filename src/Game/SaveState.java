@@ -12,6 +12,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.*;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class SaveState extends BasicGameState 
 {
@@ -92,13 +94,13 @@ public class SaveState extends BasicGameState
 		 
 		 if(input.isKeyPressed(Input.KEY_Q))
 		 {
-			 game.enterState(1);
+			 game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 		 }
 		 
 		 if(move)
 		 {
 			 move = false;
-			 game.enterState(1);
+			 game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 		 }
 		
 	}

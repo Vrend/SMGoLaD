@@ -6,6 +6,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 
 
@@ -54,17 +56,17 @@ public class MapGen extends BasicGameState
 		}
 		if(input.isKeyPressed(Input.KEY_Q))
 		{
-			game.enterState(0);
+			game.enterState(0, new FadeOutTransition(), new FadeInTransition());
 		}
 		
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
-			game.enterState(2);
+			game.enterState(2, new FadeOutTransition(), new FadeInTransition());
 		}
 		
 		if(input.isKeyPressed(Input.KEY_L))
 		{
-			game.enterState(3);
+			game.enterState(3, new FadeOutTransition(), new FadeInTransition());
 		}
 		
 		if(input.isKeyPressed(Input.KEY_C))

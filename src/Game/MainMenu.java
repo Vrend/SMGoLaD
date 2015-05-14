@@ -48,7 +48,7 @@ public class MainMenu extends BasicGameState
 		//Only temporary so it can access load menu
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
-			game.enterState(3);
+			game.enterState(3, new FadeOutTransition(), new FadeInTransition());
 			
 		}
 

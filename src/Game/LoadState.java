@@ -10,6 +10,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.*;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class LoadState extends BasicGameState 
 {
@@ -84,7 +86,7 @@ public class LoadState extends BasicGameState
 		
 		if(input.isKeyPressed(Input.KEY_Q))
 		{
-			game.enterState(0);
+			game.enterState(0, new FadeOutTransition(), new FadeInTransition());
 		}
 		
 		xpos = input.getMouseX();
@@ -204,7 +206,7 @@ public class LoadState extends BasicGameState
 					if(saves[0] != null)
 					{
 						load(saves[0]);
-						game.enterState(1);
+						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 					}
 				}
 				else
@@ -225,7 +227,7 @@ public class LoadState extends BasicGameState
 					if(saves[1] != null)
 					{
 						load(saves[1]);
-						game.enterState(1);
+						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 					}
 				}
 				else
@@ -246,7 +248,7 @@ public class LoadState extends BasicGameState
 					if(saves[2] != null)
 					{
 						load(saves[2]);
-						game.enterState(1);
+						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 					}
 				}
 				else
@@ -267,7 +269,7 @@ public class LoadState extends BasicGameState
 					if(saves[3] != null)
 					{
 						load(saves[3]);
-						game.enterState(1);
+						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 					}
 				}
 				else
@@ -288,7 +290,7 @@ public class LoadState extends BasicGameState
 					if(saves[4] != null)
 					{
 						load(saves[4]);
-						game.enterState(1);
+						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 					}
 				}
 				else
@@ -309,7 +311,7 @@ public class LoadState extends BasicGameState
 					if(saves[5] != null)
 					{
 						load(saves[5]);
-						game.enterState(1);
+						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 					}
 				}
 				else
@@ -330,7 +332,7 @@ public class LoadState extends BasicGameState
 					if(saves[6] != null)
 					{
 						load(saves[6]);
-						game.enterState(1);
+						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 					}
 				}
 				else
@@ -351,7 +353,7 @@ public class LoadState extends BasicGameState
 					if(saves[7] != null)
 					{
 						load(saves[7]);
-						game.enterState(1);
+						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 					}
 				}
 				else
