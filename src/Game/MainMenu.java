@@ -11,12 +11,14 @@ import org.newdawn.slick.state.*;
 public class MainMenu extends BasicGameState 
 {
 	Music music;
+	boolean close
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
 	{
 		music = new Music("Rains.wav");
 		music.loop();
+		close = false;
 	}
 
 	@Override
@@ -38,8 +40,15 @@ public class MainMenu extends BasicGameState
 		
 		if(input.isKeyPressed(Input.KEY_Q))
 		{
-			container.exit();
+        		 music.fade(4000, 0.1f, true);
+            		 close = true;
 		}
+
+        	if(!music.playing() && close)
+        	{
+            		container.exit();
+        	}
+		
 		
 		//Only temporary so it can access load menu
 		if(input.isKeyPressed(Input.KEY_ENTER))
