@@ -42,6 +42,15 @@ public class LoadState extends BasicGameState
 	{
 		super.enter(container, game);
 		saves = dir.list();
+
+
+        for(int i = 0; i < saves.length; i++)
+        {
+            if(saves[i].indexOf(".") != -1)
+            {
+                saves[i] = null;
+            }
+        }
 	}
 
 	@Override
