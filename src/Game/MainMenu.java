@@ -1,8 +1,11 @@
 package Game;
 
+import java.util.Random;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
@@ -13,18 +16,40 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 public class MainMenu extends BasicGameState 
 {
 	static Music music;
+	private Image[] images;
+	private int anim = 0;
+	private int count = 0;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
 	{
-		music = new Music("Rains.wav");
+		Random rand = new Random();
+		int num = rand.nextInt(4);
+		
+		music = new Music("res/sounds/Rains.wav");
 		music.loop();
+		
+		switch(num)
+		{
+		case 0: images = fill("joffrey", 252);
+		break;
+		
+		case 1: images = fill("oberyn", 292);
+		break;
+		
+		case 2: images = fill("ned", 262);
+		break;
+		
+		case 3: images = fill("fire", 181);
+		}
+		
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
 	{
-		//Only temporary until real menu is made
+		
+		g.drawImage(images[anim], 170, 60);
 		
 		g.setColor(Color.red);
 		g.drawString("Sid Meier's Game of Lords and Dragons", 245, 30);
@@ -37,6 +62,18 @@ public class MainMenu extends BasicGameState
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException 
 	{
+		count++;
+		
+		if(count % 100 == 0)
+		{
+			anim++;
+		}
+		
+		if(anim > images.length-1)
+		{
+			anim = 0;
+		}
+		
 		Input input = container.getInput();
 		
 		if(input.isKeyPressed(Input.KEY_Q))
@@ -45,7 +82,6 @@ public class MainMenu extends BasicGameState
             game.enterState(4, new FadeOutTransition(), new FadeInTransition());
 		}
 		
-		//Only temporary so it can access load menu
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
 			game.enterState(3, new FadeOutTransition(), new FadeInTransition());
@@ -76,4 +112,33 @@ public class MainMenu extends BasicGameState
 		music.setVolume(1f);
 	}
 
+	public Image[] fill(String name, int l) throws SlickException
+	{
+		Image[] img = new Image[l];
+		
+		int x = 1;
+		int y = 0;
+		int z = 0;
+		
+		for(int i = 0; i < img.length; i++)
+		{
+			img[i] = new Image("res/gifs/" + name + "/" + name + "_frame_0" + Integer.toString(z) + Integer.toString(y) + Integer.toString(x) + ".png");
+			x++;
+			
+			if(x > 9)
+			{
+				x = 0;
+				y++;
+			}
+			if(y > 9)
+			{
+				y = 0;
+				z++;
+			}
+		}
+		
+		return img;
+	}
+	
+	
 }

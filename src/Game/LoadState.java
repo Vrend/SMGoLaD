@@ -20,6 +20,7 @@ public class LoadState extends BasicGameState
 	private int xpos, ypos;
 	boolean[] hover;
 	boolean[] pressed;
+	boolean delete;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
@@ -35,7 +36,7 @@ public class LoadState extends BasicGameState
 		{
 			pressed[c] = false;
 		}
-		
+		delete = false;
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException
@@ -66,6 +67,12 @@ public class LoadState extends BasicGameState
 			{
 				g.setColor(new Color(43, 43, 43));
 			}
+			
+			else if(hover[x] && delete)
+			{
+				g.setColor(new Color(133, 0, 0));
+			}
+			
 			else if(hover[x])
 			{
 				g.setColor(new Color(230, 230, 230));
@@ -85,7 +92,17 @@ public class LoadState extends BasicGameState
 				g.drawString("None", 252, 121 + (x*50));
 			}
 		}
-		g.drawString("Choose a save to load", 257, 70);
+		
+		if(!delete)
+		{
+			g.drawString("Choose a save to load", 257, 70);
+		}
+		else
+		{
+			g.setColor(new Color(140, 0, 0));
+			g.drawString("Delete mode", 310, 70);
+		}
+		
 	}
 
 	@Override
@@ -96,6 +113,17 @@ public class LoadState extends BasicGameState
 		if(input.isKeyPressed(Input.KEY_Q))
 		{
 			game.enterState(0, new FadeOutTransition(), new FadeInTransition());
+		}
+		
+		if(input.isKeyPressed(Input.KEY_ENTER))
+		{
+			MapGen.showing = true;
+			game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+		}
+		
+		if(input.isKeyPressed(Input.KEY_D))
+		{
+			delete = !delete;
 		}
 		
 		xpos = input.getMouseX();
@@ -113,7 +141,15 @@ public class LoadState extends BasicGameState
 	public static void load(String saveName)
 	{
 		saveName = "saves/"+ saveName;
-		MapGen.land.loadLandMap(saveName);
+		try 
+		{
+			MapGen.land.loadLandMap(saveName);
+			MapGen.climate.loadClimate(saveName);
+		} 
+		catch (IOException e) 
+		{
+			System.out.println("ERROR WITH LOADING");
+		}
 	}
 	
 
@@ -209,10 +245,24 @@ public class LoadState extends BasicGameState
 		{
 			if(ypos > 120 && ypos < 160)
 			{
-				if(hover[0] && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+				if(hover[0] && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 				{
 					pressed[0] = true;
-					if(saves[0] != null)
+					
+					if(delete && saves[0] != null)
+					{
+						try
+						{
+							delete(saves[0]);
+							game.enterState(3);
+						}
+						catch(IOException e)
+						{
+							System.out.println("Error deleting save");
+						}
+					}
+					
+					else if(saves[0] != null)
 					{
 						load(saves[0]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
@@ -230,10 +280,24 @@ public class LoadState extends BasicGameState
 			
 			if(ypos > 170 && ypos < 210)
 			{
-				if(hover[1] && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+				if(hover[1] && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 				{
 					pressed[1] = true;
-					if(saves[1] != null)
+					
+					if(delete && saves[1] != null)
+					{
+						try
+						{
+							delete(saves[1]);
+							game.enterState(3);
+						}
+						catch(IOException e)
+						{
+							System.out.println("Error deleting save");
+						}
+					}
+					
+					else if(saves[1] != null)
 					{
 						load(saves[1]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
@@ -251,14 +315,29 @@ public class LoadState extends BasicGameState
 			
 			if(ypos > 220 && ypos < 260)
 			{
-				if(hover[2] && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+				if(hover[2] && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 				{
 					pressed[2] = true;
-					if(saves[2] != null)
+					
+					if(delete && saves[2] != null)
+					{
+						try
+						{
+							delete(saves[2]);
+							game.enterState(3);
+						}
+						catch(IOException e)
+						{
+							System.out.println("Error deleting save");
+						}
+					}
+					
+					else if(saves[2] != null)
 					{
 						load(saves[2]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 					}
+					
 				}
 				else
 				{
@@ -272,10 +351,24 @@ public class LoadState extends BasicGameState
 			
 			if(ypos > 270 && ypos < 310)
 			{
-				if(hover[3] && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+				if(hover[3] && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 				{
 					pressed[3] = true;
-					if(saves[3] != null)
+					
+					if(delete && saves[3] != null)
+					{
+						try
+						{
+							delete(saves[3]);
+							game.enterState(3);
+						}
+						catch(IOException e)
+						{
+							System.out.println("Error deleting save");
+						}
+					}
+					
+					else if(saves[3] != null)
 					{
 						load(saves[3]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
@@ -293,10 +386,24 @@ public class LoadState extends BasicGameState
 			
 			if(ypos > 320 && ypos < 360)
 			{
-				if(hover[4] && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+				if(hover[4] && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 				{
 					pressed[4] = true;
-					if(saves[4] != null)
+					
+					if(delete && saves[4] != null)
+					{
+						try
+						{
+							delete(saves[4]);
+							game.enterState(3);
+						}
+						catch(IOException e)
+						{
+							System.out.println("Error deleting save");
+						}
+					}
+					
+					else if(saves[4] != null)
 					{
 						load(saves[4]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
@@ -314,10 +421,24 @@ public class LoadState extends BasicGameState
 			
 			if(ypos > 370 && ypos < 410)
 			{
-				if(hover[5] && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+				if(hover[5] && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 				{
 					pressed[5] = true;
-					if(saves[5] != null)
+					
+					if(delete && saves[5] != null)
+					{
+						try
+						{
+							delete(saves[5]);
+							game.enterState(3);
+						}
+						catch(IOException e)
+						{
+							System.out.println("Error deleting save");
+						}
+					}
+					
+					else if(saves[5] != null)
 					{
 						load(saves[5]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
@@ -335,10 +456,24 @@ public class LoadState extends BasicGameState
 			
 			if(ypos > 420 && ypos < 460)
 			{
-				if(hover[6] && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+				if(hover[6] && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 				{
 					pressed[6] = true;
-					if(saves[6] != null)
+					
+					if(delete && saves[6] != null)
+					{
+						try
+						{
+							delete(saves[6]);
+							game.enterState(3);
+						}
+						catch(IOException e)
+						{
+							System.out.println("Error deleting save");
+						}
+					}
+					
+					else if(saves[6] != null)
 					{
 						load(saves[6]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
@@ -356,10 +491,24 @@ public class LoadState extends BasicGameState
 			
 			if(ypos > 470 && ypos < 510)
 			{
-				if(hover[7] && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))
+				if(hover[7] && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 				{
 					pressed[7] = true;
-					if(saves[7] != null)
+					
+					if(delete && saves[7] != null)
+					{
+						try
+						{
+							delete(saves[7]);
+							game.enterState(3);
+						}
+						catch(IOException e)
+						{
+							System.out.println("Error deleting save");
+						}
+					}
+					
+					else if(saves[7] != null)
 					{
 						load(saves[7]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
@@ -389,6 +538,22 @@ public class LoadState extends BasicGameState
 	public int getID() 
 	{
 		return 3;
+	}
+	
+	public void delete(String saveName) throws IOException
+	{
+		File del = new File("saves/" + saveName);
+		
+		if(del.exists())
+		{
+			File[] files = del.listFiles();
+			
+			for(File f : files)
+			{
+				f.delete();
+			}
+		}
+		del.delete();
 	}
 
 }

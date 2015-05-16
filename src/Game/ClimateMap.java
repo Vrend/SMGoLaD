@@ -1,6 +1,7 @@
 package Game;
 
 import org.newdawn.slick.Color;
+import java.io.*;
 import org.newdawn.slick.Graphics;
 
 public class ClimateMap
@@ -130,6 +131,68 @@ public class ClimateMap
     			g.drawRect(r*5, c*5, 5, 5);
     		}
     	}
+    }
+    
+    public void saveClimate(String saveName) throws IOException
+    {
+    	File input = new File(saveName + "/climate.dat");
+		if(!input.exists())
+		{
+			input.createNewFile();
+		}
+    	
+    	FileWriter fw = new FileWriter(input);
+		BufferedWriter bw = new BufferedWriter(fw);
+    	
+    	for(int r = 0; r < climate.length; r++)
+    	{
+    		String s = "";
+    		for(int c = 0; c < climate[r].length; c++)
+    		{
+    			s = s + climate[r][c] + "x";
+    		}
+    		bw.write(s);
+    		bw.newLine();
+    	}
+    	
+    	bw.close();
+    	fw.close();
+    }
+    
+    public void loadClimate(String saveName) throws IOException
+    {
+    	File input = new File(saveName + "/climate.dat");
+    	
+    	FileReader fr = new FileReader(input);
+    	BufferedReader br = new BufferedReader(fr);
+    	
+    	for(int r = 0; r < climate.length; r++)
+    	{
+    		String s = br.readLine();
+    		char[] ch = s.toCharArray();
+    		int x = 0;
+    		for(int c = 0; c < climate[r].length; c++)
+    		{
+    			String t = "";
+    			while(true)
+    			{	
+    				if(ch[x] != 'x')
+    				{
+    					t += ch[x];
+    				}
+    				else
+    				{
+    					x++;
+    					break;
+    				}
+    				x++;
+    			}
+    			climate[r][c] = Float.parseFloat(t);
+    		}
+    	}
+    	
+    	br.close();
+    	fr.close();	
     }
 
 

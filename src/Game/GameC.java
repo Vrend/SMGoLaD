@@ -1,6 +1,5 @@
 package Game;
 
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -25,11 +24,13 @@ public class GameC extends StateBasedGame
 
 	public static void main(String[] args)
 	{
+		String[] stuff = {"res/pics/icon32.png", "res/pics/icon24.png", "res/pics/icon16.png"};
+		
 		try
 		{
 			AppGameContainer container = new AppGameContainer(new GameC("Sid Meier's Game of Lords and Dragons"));
 			container.setDisplayMode(800, 600, false);
-			container.setIcon("icon.png");
+			container.setIcons(stuff);
             container.setShowFPS(false);
 			container.start();
 		}

@@ -1,5 +1,6 @@
 package Game;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -20,6 +21,9 @@ public class MapGen extends BasicGameState
 	
 	static LandMap land;
     static ClimateMap climate;
+    
+    //Necessary for showing non-loaded maps
+    public static boolean showing;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
@@ -30,13 +34,22 @@ public class MapGen extends BasicGameState
 		land = new LandMap(width, height, size);
         climate = new ClimateMap(width, height, size);
         climateShowing = false;
-		generateMap();
+        showing = false;
 	}
 	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException 
 	{
-		if(climateShowing)
+		if(showing)
+		{
+			g.setColor(Color.blue);
+			g.fillRect(0, 0, 800, 600);
+			g.setColor(Color.white);
+			g.drawString("Press R to generate a Map", 300, 200);
+			g.drawString("Press C to view the climate", 300, 250);
+			
+		}
+		else if(climateShowing)
 		{
 			climate.drawClimate(g);
 		}
@@ -52,6 +65,7 @@ public class MapGen extends BasicGameState
 		Input input = container.getInput();
 		if(input.isKeyPressed(Input.KEY_R))
 		{
+			showing = false;
 			generateMap();
 		}
 		if(input.isKeyPressed(Input.KEY_Q))
@@ -69,7 +83,7 @@ public class MapGen extends BasicGameState
 			game.enterState(3, new FadeOutTransition(), new FadeInTransition());
 		}
 		
-		if(input.isKeyPressed(Input.KEY_C))
+		if(input.isKeyPressed(Input.KEY_C) && !showing)
 		{
 			climateShowing = !climateShowing;
 		}

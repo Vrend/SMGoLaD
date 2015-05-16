@@ -2,6 +2,7 @@ package Game;
 
 
 import java.io.File;
+import java.io.IOException;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -121,8 +122,16 @@ public class SaveState extends BasicGameState
 		{
 			directory.mkdir();
 		}
-
-		MapGen.land.saveLandMap(s);
+		
+		try 
+		{
+			MapGen.land.saveLandMap(s);
+			MapGen.climate.saveClimate(s);
+		} 
+		catch (IOException e) 
+		{
+			System.out.println("Error saving!");
+		}
 	}
 	
 	
@@ -165,6 +174,13 @@ public class SaveState extends BasicGameState
 		}
 		
 		return end;
+	}
+	
+	
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException
+	{
+		super.enter(container, game);
+		field.setText("");
 	}
 	
 	
