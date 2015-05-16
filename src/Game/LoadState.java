@@ -117,7 +117,6 @@ public class LoadState extends BasicGameState
 		
 		if(input.isKeyPressed(Input.KEY_ENTER))
 		{
-			MapGen.showing = true;
 			game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 		}
 		

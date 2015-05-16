@@ -67,7 +67,7 @@ public class ClimateMap
     			int f = (int) climate[r][c];
     			
     			if(MapGen.land.getElement(r, c) == 0)
-    				f -= 10;
+    				f -= 20;
     			
     			switch(f)
     			{
@@ -195,6 +195,13 @@ public class ClimateMap
     	fr.close();	
     }
 
-
-
+    public float getClimate(int r, int c)
+    {
+    	return climate[r][c];
+    }
+    
+    public void setClimate(int r, int c, float num)
+    {
+    	climate[r][c] = num;
+    }
 }

@@ -73,8 +73,7 @@ public class LandMap
 	
 		
 	public void genLand(int num)
-	{
-		
+	{	
 		for(int r = 0; r < map.length; r++)
 		{
 			for(int c = 0; c < map[r].length; c++)
@@ -89,7 +88,7 @@ public class LandMap
 			map[(int)(Math.random() * map.length)][(int)(Math.random() * map[0].length)] = 1;
 		}
 		
-		for(int y = 0; y < 12; y++)
+		for(int y = 0; y < 8; y++)
 		{
 			for(int r = 0; r < map.length; r++)
 			{
@@ -99,7 +98,7 @@ public class LandMap
 					{
 						if(map[r-1][c] == 1 || map[r+1][c] == 1 || map[r][c-1] == 1 || map[r][c+1] == 1 || map[r-1][c-1] == 1 || map[r+1][c+1] == 1 || map[r-1][c+1] == 1 || map[r+1][c-1] == 1)
 						{
-							if(Math.random() > .66)
+							if(Math.random() <= .33)
 							{
 								map[r][c] = 1;
 							}
@@ -293,5 +292,44 @@ public class LandMap
 	{
 		return map[r][c];
 	}
+	
+	public boolean onCoast(int r, int c)
+	{
+		if(r > 0)
+		{
+			if(map[r-1][c] == 0)
+			{
+				return true;
+			}
+		}
+		
+		if(c > 0)
+		{
+			if(map[r][c-1] == 0)
+			{
+				return true;
+			}
+		}
+		
+		if(r < (map.length-1))
+		{
+			if(map[r+1][c] == 0)
+			{
+				return true;
+			}
+		}
+		
+		if(c < (map[0].length-1))
+		{
+			if(map[r][c+1] == 0)
+			{
+				return true;
+			}
+		}
+		
+		
+		return false;
+	}
+	
 	
 }
