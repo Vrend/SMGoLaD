@@ -20,7 +20,8 @@ Progress:
 
 - Partial land generation
 - rudimentary climate system
-- Save system which accepts names
-- Load system which displays 8 saves
+- A few geographic features (some modify climate)
+- Save system which accepts names (Currently not working with geographic features)
+- Load system which displays 8 saves (Currently not working with geographic features)
 - Main menu with music and fade on close
 - land is generated with the "r" button
