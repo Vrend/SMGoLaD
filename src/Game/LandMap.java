@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -81,6 +82,10 @@ public class LandMap
 				map[r][c] = 0;
 			}
 		}
+
+        Random rand = new Random();
+        int randomNum = rand.nextInt(11);
+        randomNum += 5;
 		
 		
 		for(int x = 0; x < num; x++)
@@ -88,7 +93,7 @@ public class LandMap
 			map[(int)(Math.random() * map.length)][(int)(Math.random() * map[0].length)] = 1;
 		}
 		
-		for(int y = 0; y < 8; y++)
+		for(int y = 0; y < randomNum; y++)
 		{
 			for(int r = 0; r < map.length; r++)
 			{

@@ -19,12 +19,15 @@ public class MainMenu extends BasicGameState
 	private Image[] images;
 	private int anim = 0;
 	private int count = 0;
+    private int gifInterpolation;
+    String os;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
 	{
 		Random rand = new Random();
 		int num = rand.nextInt(4);
+
 		
 		music = new Music("res/sounds/Rains.wav");
 		music.loop();
@@ -42,7 +45,19 @@ public class MainMenu extends BasicGameState
 		
 		case 3: images = fill("fire", 181);
 		}
-		
+
+        os = System.getProperty("os.name");
+
+
+        if(os.contains("Mac"))
+        {
+            gifInterpolation = 25;
+        }
+        else if(os.contains("Windows"))
+        {
+            gifInterpolation = 100;
+        }
+
 	}
 
 	@Override
@@ -64,7 +79,7 @@ public class MainMenu extends BasicGameState
 	{
 		count++;
 		
-		if(count % 100 == 0)
+		if(count % gifInterpolation == 0)
 		{
 			anim++;
 		}

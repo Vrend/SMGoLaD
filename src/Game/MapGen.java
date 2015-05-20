@@ -14,8 +14,8 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class MapGen extends BasicGameState
 {
-	private static int size;
-	private static int width, height;
+	private int size;
+	private int width, height;
 	
 	private boolean climateShowing;
 	private boolean geoShowing;
@@ -113,8 +113,8 @@ public class MapGen extends BasicGameState
 	
 	public static void generateMap()
 	{
-		int contnum = (int) ((Math.random() * 4) + 1);
-		land.genLand(contnum);
+		int continents = (int) ((Math.random() * 4) + 1);
+		land.genLand(continents);
 		climate.genClimate();
 		geo.genGeo();	
 	}

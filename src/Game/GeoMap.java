@@ -34,17 +34,17 @@ public class GeoMap
 		try
 		{
 			clear();
-			System.out.println("P1");
+			//System.out.println("P1");
 			oceans();
-			System.out.println("P2");
+			//System.out.println("P2");
 			ice();
-			System.out.println("P3");
+			//System.out.println("P3");
 			coast();
-			System.out.println("P4");
+			//System.out.println("P4");
 			tundra();	
-			System.out.println("P5");
+			//System.out.println("P5");
 			desert((int) ((Math.random() * 5) + 1));
-			System.out.println("P6");
+			//System.out.println("P6");
 		}
 		catch(Exception e)
 		{
@@ -89,8 +89,7 @@ public class GeoMap
 	
 	public void ice()
 	{
-		for(int x = 0; x < 3; x++)
-		{
+
 			for(int r = 0; r < geo.length; r++)
 			{
 				for(int c = 0; c < geo[r].length; c++)
@@ -122,7 +121,7 @@ public class GeoMap
 						}
 					}
 				}
-			}
+
 		}
 		
 		for(int r = 0; r < geo.length; r++)
@@ -147,6 +146,17 @@ public class GeoMap
 				}
 			}
 		}
+
+        for(int r = 0; r < geo.length; r++)
+        {
+            for(int c = 0; c < geo[r].length; c++)
+            {
+                if(geo[r][c] == ocean && !nextTo(ocean, r, c, 1))
+                {
+                    geo[r][c] = ice;
+                }
+            }
+        }
 		
 	}
 	
