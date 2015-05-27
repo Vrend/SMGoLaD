@@ -120,7 +120,7 @@ public class LoadState extends BasicGameState
 			game.enterState(1, new FadeOutTransition(), new FadeInTransition());
 		}
 		
-		if(input.isKeyPressed(Input.KEY_D))
+		if(input.isKeyPressed(Input.KEY_X))
 		{
 			delete = !delete;
 		}

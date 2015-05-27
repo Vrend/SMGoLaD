@@ -74,7 +74,11 @@ public class LandMap
 	
 		
 	public void genLand(int num)
-	{	
+	{
+        Random rand = new Random();
+
+       double swag = (.4 * Math.random() ) + .2;
+
 		for(int r = 0; r < map.length; r++)
 		{
 			for(int c = 0; c < map[r].length; c++)
@@ -83,7 +87,6 @@ public class LandMap
 			}
 		}
 
-        Random rand = new Random();
         int randomNum = rand.nextInt(11);
         randomNum += 5;
 		
@@ -103,7 +106,8 @@ public class LandMap
 					{
 						if(map[r-1][c] == 1 || map[r+1][c] == 1 || map[r][c-1] == 1 || map[r][c+1] == 1 || map[r-1][c-1] == 1 || map[r+1][c+1] == 1 || map[r-1][c+1] == 1 || map[r+1][c-1] == 1)
 						{
-							if(Math.random() <= .33)
+
+							if(Math.random() <= swag)
 							{
 								map[r][c] = 1;
 							}

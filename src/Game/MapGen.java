@@ -81,7 +81,7 @@ public class MapGen extends BasicGameState
 			game.enterState(0, new FadeOutTransition(), new FadeInTransition());
 		}
 		
-		if(input.isKeyPressed(Input.KEY_ENTER))
+		if(input.isKeyPressed(Input.KEY_ENTER) && !showing)
 		{
 			game.enterState(2, new FadeOutTransition(), new FadeInTransition());
 		}
