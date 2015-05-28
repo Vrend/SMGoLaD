@@ -127,6 +127,7 @@ public class SaveState extends BasicGameState
 		{
 			MapGen.land.saveLandMap(s);
 			MapGen.climate.saveClimate(s);
+            MapGen.geo.saveGeo(s);
 		} 
 		catch (IOException e) 
 		{

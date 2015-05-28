@@ -23,9 +23,10 @@ public class MapGen extends BasicGameState
 	protected static LandMap land;
     protected static ClimateMap climate;
     protected static GeoMap geo;
+    protected static resMap res;
     
     //Necessary for showing non-loaded maps
-    private boolean showing;
+    private static boolean showing;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
@@ -36,6 +37,7 @@ public class MapGen extends BasicGameState
 		land = new LandMap(width, height, size);
         climate = new ClimateMap(width, height, size);
         geo = new GeoMap(width, height, size);
+        res = new resMap(width, height, size);
         climateShowing = false;
         geoShowing = false;
         showing = true;
@@ -118,6 +120,11 @@ public class MapGen extends BasicGameState
 		climate.genClimate();
 		geo.genGeo();	
 	}
+
+    public static void changeShowing()
+    {
+        showing = false;
+    }
 	
 	
 

@@ -3,6 +3,7 @@ package Game;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import java.io.*;
 import java.util.Random;
 
 public class GeoMap 
@@ -940,5 +941,70 @@ public class GeoMap
 			}
 		}
 	}
+
+
+    public void saveGeo(String s) throws IOException
+    {
+        File input = new File(s + "/geo.dat");
+
+        if(!input.exists())
+        {
+            input.createNewFile();
+        }
+
+        FileWriter fw = new FileWriter(input);
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        for(int r = 0; r < geo.length; r++)
+        {
+            String saveline = "";
+            for(int c = 0; c < geo[r].length; c++)
+            {
+                saveline = saveline + Integer.toString(geo[r][c]) + 'x';
+            }
+            bw.write(saveline);
+            bw.newLine();
+        }
+
+        bw.close();
+        fw.close();
+    }
+
+    public void loadGeo(String s) throws IOException
+    {
+        File input = new File(s + "/geo.dat");
+
+        FileReader fr = new FileReader(input);
+        BufferedReader br = new BufferedReader(fr);
+
+
+        for(int r = 0; r < geo.length; r++)
+        {
+            String loadLine = br.readLine();
+            char[] ch = loadLine.toCharArray();
+            int x = 0;
+            for(int c = 0; c < geo[r].length; c++)
+            {
+                String text = "";
+                while(true)
+                {
+                    if(ch[x] != 'x')
+                    {
+                        text += ch[x];
+                    }
+                    else
+                    {
+                        x++;
+                        break;
+                    }
+                    x++;
+                }
+                geo[r][c] = Integer.parseInt(text);
+            }
+        }
+
+        br.close();
+        fr.close();
+    }
 	
 }

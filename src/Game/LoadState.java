@@ -144,6 +144,7 @@ public class LoadState extends BasicGameState
 		{
 			MapGen.land.loadLandMap(saveName);
 			MapGen.climate.loadClimate(saveName);
+            MapGen.geo.loadGeo(saveName);
 		} 
 		catch (IOException e) 
 		{
@@ -265,6 +266,7 @@ public class LoadState extends BasicGameState
 					{
 						load(saves[0]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                        MapGen.changeShowing();
 					}
 				}
 				else
@@ -300,6 +302,7 @@ public class LoadState extends BasicGameState
 					{
 						load(saves[1]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                        MapGen.changeShowing();
 					}
 				}
 				else
@@ -335,6 +338,7 @@ public class LoadState extends BasicGameState
 					{
 						load(saves[2]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                        MapGen.changeShowing();
 					}
 					
 				}
@@ -371,6 +375,7 @@ public class LoadState extends BasicGameState
 					{
 						load(saves[3]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                        MapGen.changeShowing();
 					}
 				}
 				else
@@ -406,6 +411,7 @@ public class LoadState extends BasicGameState
 					{
 						load(saves[4]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                        MapGen.changeShowing();
 					}
 				}
 				else
@@ -441,6 +447,7 @@ public class LoadState extends BasicGameState
 					{
 						load(saves[5]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                        MapGen.changeShowing();
 					}
 				}
 				else
@@ -476,6 +483,7 @@ public class LoadState extends BasicGameState
 					{
 						load(saves[6]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                        MapGen.changeShowing();
 					}
 				}
 				else
@@ -511,6 +519,7 @@ public class LoadState extends BasicGameState
 					{
 						load(saves[7]);
 						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                        MapGen.changeShowing();
 					}
 				}
 				else
