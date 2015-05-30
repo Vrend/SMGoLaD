@@ -7,7 +7,7 @@ This is a final project for the AP Computer Science class I am taking at Wayland
 
 
 I plan to make a fully-functioning map generator with climates and geological features. After that, I hope to 
-build a functioning gui that tracks resourcesa nd allows territories and cities on the map.
+build a functioning gui that tracks resources, and allows territories and cities on the map.
 
 
 
