@@ -25,7 +25,7 @@ public class LoadState extends BasicGameState
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException 
 	{
-		saves = new String[7];
+		saves = new String[8];
 		hover = new boolean[8];
 		pressed = new boolean[8];
 		for(int i = 0; i < hover.length; i++)
@@ -37,20 +37,23 @@ public class LoadState extends BasicGameState
 			pressed[c] = false;
 		}
 		delete = false;
+		
+		if(!dir.exists())
+		{
+			dir.mkdir();
+		}
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException
 	{
 		super.enter(container, game);
 		saves = dir.list();
-
-
         for(int i = 0; i < saves.length; i++)
         {
-            if(saves[i].indexOf(".") != -1)
-            {
-                saves[i] = null;
-            }
+        		if(saves[i].indexOf(".") != -1)
+                {
+                    saves[i] = null;
+                }
         }
 	}
 

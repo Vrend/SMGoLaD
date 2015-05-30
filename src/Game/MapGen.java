@@ -19,6 +19,7 @@ public class MapGen extends BasicGameState
 	
 	private boolean climateShowing;
 	private boolean geoShowing;
+	private boolean resShowing;
 	
 	protected static LandMap land;
     protected static ClimateMap climate;
@@ -40,6 +41,7 @@ public class MapGen extends BasicGameState
         res = new resMap(width, height, size);
         climateShowing = false;
         geoShowing = false;
+        resShowing = false;
         showing = true;
 	}
 	
@@ -52,8 +54,10 @@ public class MapGen extends BasicGameState
 			g.fillRect(0, 0, 800, 600);
 			g.setColor(Color.white);
 			g.drawString("Press R to generate a Map", 300, 200);
-			g.drawString("Press C to view the climate", 300, 250);
-			
+		}
+		else if(resShowing)
+		{
+			res.drawRes(g);
 		}
 		else if(geoShowing)
 		{
@@ -103,6 +107,11 @@ public class MapGen extends BasicGameState
 			geoShowing = !geoShowing;
 		}
 		
+		if(input.isKeyPressed(Input.KEY_E))
+		{
+			resShowing = !resShowing;
+		}
+		
 	}
 	
 
@@ -119,6 +128,7 @@ public class MapGen extends BasicGameState
 		land.genLand(continents);
 		climate.genClimate();
 		geo.genGeo();	
+		res.generateResources();
 	}
 
     public static void changeShowing()

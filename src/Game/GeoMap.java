@@ -1006,5 +1006,11 @@ public class GeoMap
         br.close();
         fr.close();
     }
+    
+    
+    public int getGeo(int r, int c)
+    {
+    	return geo[r][c];
+    }
 	
 }
