@@ -109,25 +109,32 @@ public class SaveState extends BasicGameState
 	public static void save(String saveName) 
 	{	
 		File savefolder = new File("saves");
+
 		
 		if(!savefolder.exists())
 		{
 			savefolder.mkdir();
-			System.out.println("PROBLEM");
 		}
-		
+
 		String s = "saves/" + saveName;
 		File directory = new File(s);
 		if(!directory.exists())
 		{
 			directory.mkdir();
 		}
+        s += "/map";
+        File mapFolder = new File(s);
+        if(!mapFolder.exists())
+        {
+            mapFolder.mkdir();
+        }
 		
 		try 
 		{
 			MapGen.land.saveLandMap(s);
 			MapGen.climate.saveClimate(s);
             MapGen.geo.saveGeo(s);
+            MapGen.res.saveResMap(s);
 		} 
 		catch (IOException e) 
 		{

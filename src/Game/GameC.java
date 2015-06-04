@@ -20,6 +20,8 @@ public class GameC extends StateBasedGame
 		addState(new SaveState());
 		addState(new LoadState());
         addState(new CloseState());
+        addState(new SetupState());
+        addState(new GamePlayState());
 	}
 
 	public static void main(String[] args)
@@ -36,7 +38,7 @@ public class GameC extends StateBasedGame
 		}
 		catch(SlickException e)
 		{
-			System.out.print("You aint da MVP");
+			System.out.println("Slick Container Error");
 		}
 	}
 	

@@ -87,7 +87,7 @@ public class MapGen extends BasicGameState
 			game.enterState(0, new FadeOutTransition(), new FadeInTransition());
 		}
 		
-		if(input.isKeyPressed(Input.KEY_ENTER) && !showing)
+		if(input.isKeyPressed(Input.KEY_S) && !showing)
 		{
 			game.enterState(2, new FadeOutTransition(), new FadeInTransition());
 		}
@@ -100,18 +100,28 @@ public class MapGen extends BasicGameState
 		if(input.isKeyPressed(Input.KEY_C) && !showing)
 		{
 			climateShowing = !climateShowing;
+            geoShowing = false;
+            resShowing = false;
 		}
 		
 		if(input.isKeyPressed(Input.KEY_G))
 		{
 			geoShowing = !geoShowing;
+            resShowing = false;
+            climateShowing = false;
 		}
 		
 		if(input.isKeyPressed(Input.KEY_E))
 		{
 			resShowing = !resShowing;
+            geoShowing = false;
+            climateShowing = false;
 		}
-		
+
+        if(input.isKeyPressed(Input.KEY_ENTER) && !showing)
+        {
+            game.enterState(5, new FadeOutTransition(), new FadeInTransition());
+        }
 	}
 	
 

@@ -28,7 +28,6 @@ public class MainMenu extends BasicGameState
 		Random rand = new Random();
 		int num = rand.nextInt(4);
 
-		
 		music = new Music("res/sounds/Rains.wav");
 		music.loop();
 		

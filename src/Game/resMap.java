@@ -5,6 +5,8 @@ import static java.lang.Math.random;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import java.io.*;
+
 public class resMap
 {
     private int width, height, size;
@@ -66,7 +68,7 @@ public class resMap
     	if(type == ocean)
     	{
     		double num = random();
-    		if(MapGen.geo.nextTo(beach, r, c, 1) == false && num > .98)
+    		if(!MapGen.geo.nextTo(beach, r, c, 1) && num > .98)
         	{
         		return whales;
         	}
@@ -86,9 +88,7 @@ public class resMap
     	
     	else if(type == desert)
     	{
-    		double num = random();
-    		
-    		if(num > .9)
+    		if(random() > .95)
     		{
     			if(random() > .5)
     			{
@@ -99,11 +99,8 @@ public class resMap
     				return tin;
     			}
     		}
-    		else if(num > .7)
-    		{
-    			return gold;
-    		}
-    		else if(num > .4)
+
+    		else if(random() > .97)
     		{
     			return coal;
     		}
@@ -116,11 +113,11 @@ public class resMap
     	else if(type == tundra)
     	{
     		double num = random();
-    		if(num > .6)
+    		if(num > .95) //change
     		{
     			return iron;
     		}
-    		else if(num > .4)
+    		else if(random() > .96)
     		{
     			return beasts;
     		}
@@ -132,7 +129,7 @@ public class resMap
     	
     	else if(type == beach)
     	{
-    		if(random() > .8)
+    		if(random() > .9)
     		{
     			return silver;
     		}
@@ -145,11 +142,11 @@ public class resMap
     	else if(type == hill)
     	{
     		double num = random();
-    		if(num > .8)
+    		if(num > .9)
     		{
-    			return beasts;
+    			return iron;
     		}
-    		else if(num > .6)
+    		else if(num > .7)
     		{
     			if(random() > .5)
     			{
@@ -160,7 +157,7 @@ public class resMap
     				return tin;
     			}
     		}
-    		else if(num > .4)
+    		else if(num > .6)
     		{
     			if(random() > .7)
     			{
@@ -180,15 +177,15 @@ public class resMap
     	else if(type == plains)
     	{
     		double num = random();
-    		if(num >= .8)
+    		if(num >= .93)
     		{
     			return grove;
     		}
-    		else if(num >= .6)
+    		else if(random() >= .98)
     		{
     			return horses;
     		}
-    		else if(num > .4)
+    		else if(random() > .95)
     		{
     			return livestock;
     		}
@@ -200,10 +197,14 @@ public class resMap
     	
     	else if(type == mountain)
     	{
-    		if(random() > .5)
+    		if(random() > .7)
     		{
     			double num = random();
-    			if(num > .7)
+                if(num > .8)
+                {
+                    return coal;
+                }
+    			else if(num > .7)
     			{
     				return gold;
     			}
@@ -213,11 +214,11 @@ public class resMap
     			}
     			else if(num > .4)
     			{
-    				if(random() > .7)
+    				if(random() > .8)
     				{
     					return iron;
     				}
-    				else if(random() > .5)
+    				else if(random() > .7)
     				{
     					return copper;
     				}
@@ -241,15 +242,15 @@ public class resMap
     	{
     		double num = random();
     		
-    		if(num > .7)
+    		if(num > .85)
     		{
     			return bananas;
     		}
-    		else if(num > .5)
+    		else if(random() > .92)
     		{
     			return beasts;
     		}
-    		else if(num > .3)
+    		else if(num > .6)
     		{
     			return grove;
     		}
@@ -263,22 +264,26 @@ public class resMap
     	{
     		double num = random();
     	
-    		if(num > .7)
+    		if(num > .95)
     		{
-    			if(random() > .5)
+    			if(random() > .95)
     			{
     				return horses;
     			}
-    			else
+    			else if(random() > .95)
     			{
     				return beasts;
     			}
+                else
+                {
+                    return 0;
+                }
     		}
-    		else if(num > .6)
+    		else if(random() > .95)
     		{
     			return livestock;
     		}
-    		else if(num > .3)
+    		else if(random() > .9)
     		{
     			return grove;
     		}
@@ -292,18 +297,17 @@ public class resMap
     	{
     		double num = random();
     		
-    		if(num > .7)
+    		if(num > .95)
     		{
     			return grove;
     		}
-    		else if(num > .5)
+    		else if(num > .8)
     		{
-    			double num2 = random();
-    			if(num2 > .6)
+    			if(random() > .95)
     			{
     				return horses;
     			}
-    			else if(num2 >= .4)
+    			else if(random() >= .93)
     			{
     				return livestock;
     			}
@@ -339,8 +343,11 @@ public class resMap
         			case whales: g.setColor(new Color(7, 230, 181));
         			break;
         			
-        			case fish: g.setColor(Color.pink);
+        			case fish: g.setColor(new Color(4, 79, 60));
         			break;
+
+                    case freshwater: g.setColor(new Color(0, 255, 242));
+                    break;
         			
         			default: g.setColor(new Color(99, 98, 138));
         			break;
@@ -356,38 +363,35 @@ public class resMap
         			{
         			case gold: g.setColor(new Color(255, 225, 0));
         			break;
-        			
+
         			case silver: g.setColor(new Color(219, 219, 219));
         			break;
-        			
+
         			case copper: g.setColor(new Color(222, 98, 31));
         			break;
-        			
+
         			case tin: g.setColor(new Color(94, 91, 89));
         			break;
-        			
+
         			case iron: g.setColor(new Color(128, 116, 110));
         			break;
-        			
-        			case coal: g.setColor(new Color(3, 2, 2));
+
+        			case coal: g.setColor(Color.black);
         			break;
-        			
+
         			case grove: g.setColor(new Color(0, 46, 11));
         			break;
-        			
+
         			case livestock: g.setColor(new Color(61, 143, 81));
         			break;
-        			
-        			case horses: g.setColor(new Color(69, 55, 0));
+
+        			case horses: g.setColor(new Color(51, 255, 0));
         			break;
-        			
-        			case beasts: g.setColor(Color.white);
+
+        			case beasts: g.setColor(new Color(74, 28, 13));
         			break;
-        			
-        			case bananas: g.setColor(new Color(255, 234, 0));
-        			break;
-        			
-        			case freshwater: g.setColor(new Color(0, 255, 242));
+
+        			case bananas: g.setColor(new Color(227, 216, 95));
         			break;
         			
         			default: g.setColor(Color.red);
@@ -401,6 +405,70 @@ public class resMap
     			
     		}
     	}
+    }
+
+
+    public void saveResMap(String s) throws IOException
+    {
+        File input = new File(s + "/res.dat");
+
+        if(!input.exists())
+        {
+            input.createNewFile();
+        }
+
+        FileWriter fw = new FileWriter(input);
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        for(int r = 0; r < res.length; r++)
+        {
+            String saveline = "";
+            for(int c = 0; c < res[r].length; c++)
+            {
+                saveline = saveline + Integer.toString(res[r][c]) + 'x';
+            }
+            bw.write(saveline);
+            bw.newLine();
+        }
+
+        bw.close();
+        fw.close();
+    }
+
+    public void loadResMap(String s) throws IOException
+    {
+        File input = new File(s + "/res.dat");
+
+        FileReader fr = new FileReader(input);
+        BufferedReader br = new BufferedReader(fr);
+
+        for(int r = 0; r < res.length; r++)
+        {
+            String loadLine = br.readLine();
+            char[] ch = loadLine.toCharArray();
+            int x = 0;
+            for(int c = 0; c < res[r].length; c++)
+            {
+                String text = "";
+                while(true)
+                {
+                    if(ch[x] != 'x')
+                    {
+                        text += ch[x];
+                    }
+                    else
+                    {
+                        x++;
+                        break;
+                    }
+                    x++;
+                }
+                res[r][c] = Integer.parseInt(text);
+            }
+        }
+
+        br.close();
+        fr.close();
     }
     
     

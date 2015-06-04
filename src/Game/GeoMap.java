@@ -37,25 +37,25 @@ public class GeoMap
 		try
 		{
 			clear();
-			System.out.println("P1");
+			//System.out.println("P1");
 			oceans();
-			System.out.println("P2");
+			//System.out.println("P2");
 			ice();
-			System.out.println("P3");
+			//System.out.println("P3");
 			coast();
-			System.out.println("P4");
+			//System.out.println("P4");
 			tundra();	
-			System.out.println("P5");
+			//System.out.println("P5");
 			desert((int) ((Math.random() * 5) + 1));
-			System.out.println("P6");
+			//System.out.println("P6");
             mountainGen();
-            System.out.println("P7");
+           // System.out.println("P7");
             hillGen();
-            System.out.println("P8");
+            //System.out.println("P8");
             rainforestGen();
-            System.out.println("P9");
+            //System.out.println("P9");
             tempForestGen();
-            System.out.println("P10");
+           // System.out.println("P10");
             fillIn();
 		}
 		catch(Exception e)

@@ -55,6 +55,7 @@ public class LoadState extends BasicGameState
                     saves[i] = null;
                 }
         }
+        delete = false;
 	}
 
 	@Override
@@ -142,12 +143,13 @@ public class LoadState extends BasicGameState
 	
 	public static void load(String saveName)
 	{
-		saveName = "saves/"+ saveName;
+		saveName = "saves/"+ saveName + "/map";
 		try 
 		{
 			MapGen.land.loadLandMap(saveName);
 			MapGen.climate.loadClimate(saveName);
             MapGen.geo.loadGeo(saveName);
+            MapGen.res.loadResMap(saveName);
 		} 
 		catch (IOException e) 
 		{
@@ -553,18 +555,26 @@ public class LoadState extends BasicGameState
 	
 	public void delete(String saveName) throws IOException
 	{
-		File del = new File("saves/" + saveName);
-		
-		if(del.exists())
+		File delmap = new File("saves/" + saveName);
+		if(delmap.exists())
 		{
-			File[] files = del.listFiles();
+			File[] files = delmap.listFiles();
 			
 			for(File f : files)
 			{
-				f.delete();
+				if(f.isDirectory())
+                {
+                    File[] temp = f.listFiles();
+
+                    for(File f2 : temp)
+                    {
+                        f2.delete();
+                    }
+                    f.delete();
+                }
 			}
 		}
-		del.delete();
+		delmap.delete();
 	}
 
 }
