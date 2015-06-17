@@ -4,11 +4,14 @@ import org.newdawn.slick.Color;
 import java.io.*;
 import org.newdawn.slick.Graphics;
 
+//generates, displays, saves, and loads climate map
 public class ClimateMap
 {
+    //instance fields
     private int width, height, size;
     private float[][] climate;
 
+    //constructor, fills in instance fields
     public ClimateMap(int w, int h, int s)
     {
         width = w;
@@ -17,7 +20,7 @@ public class ClimateMap
         climate = new float[width/size][height/size];
     }
 
-
+    //generates basic climate for each tile, based on getTemp()
     public void genClimate()
     {
         int equator = height/2;
@@ -27,13 +30,13 @@ public class ClimateMap
             for(int c = 0; c < climate[r].length; c++)
             {
             	
-            		climate[r][c] = getTemp(equator, c);
+            	climate[r][c] = getTemp(equator, c);
             }
         }
     }
 
 
-
+    //The closer to the equator, the warmer you are
     private float getTemp(int e, int col)
     {
         float temp = 0f;
@@ -42,6 +45,7 @@ public class ClimateMap
         
         int x = 20;
         float y = 90f;
+
         while(true)
         {
         	 if(diff <= x)
@@ -57,18 +61,22 @@ public class ClimateMap
         return temp;
     }
 
-
+    //draws the climate on the screen
     public void drawClimate(Graphics g)
     {
+        //for each tile..
     	for(int r = 0; r < climate.length; r++)
     	{
     		for(int c = 0; c < climate[r].length; c++)
     		{
+                //grabs climate value
     			int f = (int) climate[r][c];
-    			
+
+                //if ocean, lower temp by 20
     			if(MapGen.land.getElement(r, c) == 0)
     				f -= 20;
-    			
+
+                //chooses color based on temperature
     			switch(f)
     			{
     			case 90: g.setColor(new Color(153, 0, 0));
@@ -119,60 +127,79 @@ public class ClimateMap
     			default: g.setColor(new Color(0, 0, 0));
     			break;
     			}
-    			
+
+                //fills square
     			g.fillRect(r*5, c*5, 5, 5);
-    			
+
+                //sets outline color based on land or ocean
     			if(MapGen.land.getElement(r, c) == 1)
     				g.setColor(new Color(0, 0, 0));
     			else
     				g.setColor(new Color(158, 158, 158));
     			
-    			
+    			//draws outline
     			g.drawRect(r*5, c*5, 5, 5);
     		}
     	}
     }
-    
+
+    //save function
     public void saveClimate(String saveName) throws IOException
     {
+        //creates file in save folder named climate.dat
     	File input = new File(saveName + "/climate.dat");
 		if(!input.exists())
 		{
 			input.createNewFile();
 		}
-    	
+
+        //filewriter and buffer are created
     	FileWriter fw = new FileWriter(input);
 		BufferedWriter bw = new BufferedWriter(fw);
-    	
+
+        //goes through each row
     	for(int r = 0; r < climate.length; r++)
     	{
+            //creates string for row
     		String s = "";
+            //adds each value to string, with "x" in between each value
     		for(int c = 0; c < climate[r].length; c++)
     		{
     			s = s + climate[r][c] + "x";
     		}
+            //writes line to file
     		bw.write(s);
+            //new line
     		bw.newLine();
     	}
-    	
+
+    	//closes the filewriter and bufferedwriter
     	bw.close();
     	fw.close();
     }
-    
+
+    //Loads climate
     public void loadClimate(String saveName) throws IOException
     {
+        //file is found
     	File input = new File(saveName + "/climate.dat");
-    	
+
+        //readers initialized
     	FileReader fr = new FileReader(input);
     	BufferedReader br = new BufferedReader(fr);
-    	
+
+        //for each row
     	for(int r = 0; r < climate.length; r++)
     	{
+            //grabs row of map
     		String s = br.readLine();
+            //turns it to char array
     		char[] ch = s.toCharArray();
+            //char array pointer placeholder
     		int x = 0;
     		for(int c = 0; c < climate[r].length; c++)
     		{
+                //creates string to set value
     			String t = "";
     			while(true)
     			{	
@@ -187,14 +214,17 @@ public class ClimateMap
     				}
     				x++;
     			}
+                //parses string of temp and assigns to array
     			climate[r][c] = Float.parseFloat(t);
     		}
     	}
-    	
+
+        //close readers
     	br.close();
     	fr.close();	
     }
 
+    //allows getting of climate value and setting of it
     public float getClimate(int r, int c)
     {
     	return climate[r][c];

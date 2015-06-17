@@ -7,8 +7,11 @@ import org.newdawn.slick.Graphics;
 
 import java.io.*;
 
+//does the resources on the map
 public class resMap
 {
+
+    //instance fields
     private int width, height, size;
 
     private int[][] res;
@@ -42,6 +45,7 @@ public class resMap
     private final int grove = 13;      //fruits n' shit
     private final int freshwater = 14; //important for population and growth
 
+    //constructor
     public resMap(int w, int h, int s)
     {
         width = w;
@@ -50,6 +54,7 @@ public class resMap
         res = new int[width/size][height/size];
     }
 
+    //for each tile, grab the terrain and use the checkVal method to generate resources
     public void generateResources()
     {
         for(int r = 0; r < res.length; r++)
@@ -62,7 +67,8 @@ public class resMap
             }
         }
     }
-    
+
+    //A bunch of random probability for each resource based on each geographical feature -- (0 is nothing, no resource)
     public int checkVal(int type, int r, int c)
     {
     	if(type == ocean)
@@ -327,17 +333,22 @@ public class resMap
     		return 0;
     	}
     }
-    
+
+    //draws the map
     public void drawRes(Graphics g)
     {
+        //for each tile
     	for(int r = 0; r < res.length; r++)
     	{
     		for(int c = 0; c < res[r].length; c++)
     		{
+                //grab the resource
     			int resource = res[r][c];
-    			
+
+                //if ocean or ice
     			if(MapGen.geo.getGeo(r, c) == ocean || MapGen.geo.getGeo(r, c) == ice)
     			{
+                    //draw these resources
     				switch(resource)
         			{
         			case whales: g.setColor(new Color(7, 230, 181));
@@ -354,11 +365,16 @@ public class resMap
         			}
     				
     				g.fillRect(r * 5, c * 5, 5, 5);
+
+                    //and give them a gray outline
                     g.setColor(Color.gray);
                     g.drawRect(r * 5, c * 5, 5, 5);
     			}
+
+                //or for the land resources
     			else
     			{
+                    //select the color matching the resource
     				switch(resource)
         			{
         			case gold: g.setColor(new Color(255, 225, 0));
@@ -393,23 +409,27 @@ public class resMap
 
         			case bananas: g.setColor(new Color(227, 216, 95));
         			break;
-        			
+
+                    //or just red if no resource
         			default: g.setColor(Color.red);
         			break;
         			}
-    				
+
+                    //fill the tile
     				g.fillRect(r * 5, c * 5, 5, 5);
+
+                    //gives a black outline
                     g.setColor(Color.black);
                     g.drawRect(r * 5, c * 5, 5, 5);
     			}
-    			
     		}
     	}
     }
 
-
+    //saves the map
     public void saveResMap(String s) throws IOException
     {
+        //creates res file
         File input = new File(s + "/res.dat");
 
         if(!input.exists())
@@ -417,38 +437,51 @@ public class resMap
             input.createNewFile();
         }
 
+        //creates writers
         FileWriter fw = new FileWriter(input);
         BufferedWriter bw = new BufferedWriter(fw);
 
+        //for each row
         for(int r = 0; r < res.length; r++)
         {
+            //put every value between a "x"
             String saveline = "";
             for(int c = 0; c < res[r].length; c++)
             {
                 saveline = saveline + Integer.toString(res[r][c]) + 'x';
             }
+            //write line to file
             bw.write(saveline);
+            //new line
             bw.newLine();
         }
 
+        //close writers
         bw.close();
         fw.close();
     }
 
     public void loadResMap(String s) throws IOException
     {
+        //find res file
         File input = new File(s + "/res.dat");
 
+        //create readers
         FileReader fr = new FileReader(input);
         BufferedReader br = new BufferedReader(fr);
 
+        //for each row
         for(int r = 0; r < res.length; r++)
         {
+            //grab the line
             String loadLine = br.readLine();
+            //turn into a char array
             char[] ch = loadLine.toCharArray();
+            //x is the array pointer/counter
             int x = 0;
             for(int c = 0; c < res[r].length; c++)
             {
+                //add each char until you reach "x" -- and then increment x
                 String text = "";
                 while(true)
                 {
@@ -463,13 +496,20 @@ public class resMap
                     }
                     x++;
                 }
+                //turn the string into the number and add it to the array
                 res[r][c] = Integer.parseInt(text);
             }
         }
 
+        //close the readers
         br.close();
         fr.close();
     }
-    
+
+    //returns the element at r, c
+    public int getElement(int r, int c)
+    {
+        return res[r][c];
+    }
     
 }

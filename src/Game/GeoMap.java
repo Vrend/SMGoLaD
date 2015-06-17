@@ -1,17 +1,21 @@
 package Game;
 
+//boring imports
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import java.io.*;
 import java.util.Random;
 
+//Geographic map
 public class GeoMap 
 {
+    //required instance fields
 	private int width, height, size;
 	
 	private int[][] geo;
-	
+
+    //easy constants for each terrain type
 	private final int beach = 3;
 	private final int plains = 2;
 	private final int ocean = 1;
@@ -23,7 +27,8 @@ public class GeoMap
 	private final int temperateforest = 9;
 	private final int rainforest = 10;
 	private final int ice = 11;
-	
+
+    //constructor, sets tile sizes and creates int array
 	public GeoMap(int w, int h, int s)
 	{
 		width = w;
@@ -31,41 +36,47 @@ public class GeoMap
 		size = s;
 		geo = new int[width/size][height/size];
 	}
-	
+
+    //generates geo features
 	public void genGeo()
 	{
 		try
 		{
+            //clears map
 			clear();
-			//System.out.println("P1");
+			//generates oceans
 			oceans();
-			//System.out.println("P2");
+			//generates ice
 			ice();
-			//System.out.println("P3");
+			//finds and labels coastline as beach
 			coast();
-			//System.out.println("P4");
+			//generates tundra
 			tundra();	
-			//System.out.println("P5");
+			//creates deserts
 			desert((int) ((Math.random() * 5) + 1));
-			//System.out.println("P6");
+			//creates the mountains
             mountainGen();
-           // System.out.println("P7");
+            //adds hills
             hillGen();
-            //System.out.println("P8");
+            //generates rainforest
             rainforestGen();
-            //System.out.println("P9");
+            //adds in temperate forests
             tempForestGen();
-           // System.out.println("P10");
+            //fills in remaining tiles with hills, temp forest, plains, and grassland
             fillIn();
 		}
 		catch(Exception e)
 		{
+            //if there in an io error regenrate the map
 			System.out.println("Error generating!");
 			System.out.println("Regenerating map....");
 			genGeo();
 		}
 	}
-	
+
+    //gens coast
+
+    //if next to water, it is now beach
 	public void coast()
 	{
 		for(int r = 0; r < geo.length; r++)
@@ -73,7 +84,8 @@ public class GeoMap
 			for(int c = 0; c < geo[0].length; c++)
 			{
 				float temp = MapGen.climate.getClimate(r, c);
-				
+
+                //lowers temp by -10
 				if(MapGen.land.onCoast(r, c) && MapGen.land.getElement(r, c) == 1)
 				{
 					temp -= 10;
@@ -83,7 +95,8 @@ public class GeoMap
 			}
 		}
 	}
-	
+
+	//water, if water make it ocean
 	public void oceans()
 	{
 		for(int r = 0; r < geo.length; r++)
@@ -98,10 +111,9 @@ public class GeoMap
 		}
 	}
 	
-	
+	//if cold enough, chance of becoming ice -- the colder the more likely
 	public void ice()
 	{
-
 			for(int r = 0; r < geo.length; r++)
 			{
 				for(int c = 0; c < geo[r].length; c++)
@@ -135,7 +147,8 @@ public class GeoMap
 				}
 
 		}
-		
+
+        //loops check for lone ice and ocean tiles, fills them in
 		for(int r = 0; r < geo.length; r++)
 		{
 			for(int c = 0; c < geo[r].length; c++)
@@ -171,7 +184,8 @@ public class GeoMap
         }
 		
 	}
-	
+
+    //generates tundra, uses random map-wide variable for chance/curve -- the colder the easier it is to become tundra
 	public void tundra()
 	{
 		double chance = Math.random();
@@ -206,7 +220,8 @@ public class GeoMap
 				}
 			}
 		}
-		
+
+        //fills in tiles that are next to tundra
 		for(int r = 0; r < geo.length; r++)
 		{
 			for(int c = 0; c < geo[r].length; c++)
@@ -218,7 +233,7 @@ public class GeoMap
 			}
 		}
 		
-		
+		//eliminates sole tundra tiles
 		for(int r = 0; r < geo.length; r++)
 		{
 			for(int c = 0; c < geo[r].length; c++)
@@ -233,6 +248,7 @@ public class GeoMap
 			}
 		}
 
+        //modifies climate by -10
         for(int r = 0; r < geo.length; r++)
         {
             for(int c = 0; c < geo[r].length; c++)
@@ -245,10 +261,9 @@ public class GeoMap
                 }
             }
         }
-		
-		
 	}
-	
+
+    //desert
 	public void desert(int l)
 	{
 		int row;
@@ -259,6 +274,7 @@ public class GeoMap
 
 		double curve = Math.random();
 
+        //grabs random tiles on map for desert, one for l, the amount of deserts
 		INNERDESERT:
 		for(int x = 0; x < l; x++)
 		{
@@ -292,7 +308,8 @@ public class GeoMap
             geo[row][col] = desert;
             check++;
 		}
-		
+
+        //runs 5 times, arbitrary number -- the hotter it is, the more likely it will become desert
 		for(int y = 0; y < 5; y++)
 		{
 			for(int r = 0; r < geo.length; r++)
@@ -311,7 +328,8 @@ public class GeoMap
 						{
 							val -= .2;
 						}
-						
+
+                        //if next to desert and bigger than curve
 						if(val >= curve && nextTo(desert, r, c, 1) && !nextTo(beach, r, c, 1) && !nextTo(tundra, r, c, 1))
 						{
                             if(check > limit)
@@ -325,7 +343,8 @@ public class GeoMap
 				}
 			}	
 		}
-		
+
+        //fills in tiles extra desert tiles
 		for(int r = 0; r < geo.length; r++)
 		{
 			for(int c = 0; c < geo[r].length; c++)
@@ -337,7 +356,7 @@ public class GeoMap
 			}
 		}
 		
-		
+		//gets rid of lone desert tiles and changes temp
 		for(int r = 0; r < geo.length; r++)
 		{
 			for(int c = 0; c < geo[r].length; c++)
@@ -348,7 +367,7 @@ public class GeoMap
 					{
 						geo[r][c] = 0;
 					}
-					
+					//increases temp by 20 degrees if possible
 					else
 					{
 						float t = MapGen.climate.getClimate(r, c);
@@ -368,15 +387,17 @@ public class GeoMap
 			}
 		}
 	}
-	
+
+    //mountain creation
 	public void mountainGen()
     {
         Random rand = new Random();
-
+        //number of mountain chains
         int curve = rand.nextInt(4) + 1;
 
         int row, col;
 
+        //grabs random mountain tiles
         for (int x = 0; x < curve; x++)
         {
             while (true)
@@ -396,6 +417,7 @@ public class GeoMap
             geo[row][col] = mountain;
         }
 
+        //runs up to 4 times, adding mountains to each range
         int len = rand.nextInt(5);
 
         for(int y = 0; y < len; y++)
@@ -413,21 +435,22 @@ public class GeoMap
             }
         }
 
-            for(int r = 0; r < geo.length; r++)
+        //changes temperature by -20
+        for(int r = 0; r < geo.length; r++)
+        {
+            for(int c = 0; c < geo[r].length; c++)
             {
-                for(int c = 0; c < geo[r].length; c++)
+                if(geo[r][c] == mountain)
                 {
-                    if(geo[r][c] == mountain)
-                    {
-                        float t = MapGen.climate.getClimate(r, c);
-                        t -= 20;
-                        MapGen.climate.setClimate(r, c, t);
-                    }
+                    float t = MapGen.climate.getClimate(r, c);
+                    t -= 20;
+                    MapGen.climate.setClimate(r, c, t);
                 }
             }
+        }
     }
 
-
+    //creates hills, which appear next to mountains, with a 2/3 chance
     public void hillGen()
     {
         for(int r = 0; r < geo.length; r++)
@@ -444,7 +467,7 @@ public class GeoMap
             }
         }
 
-
+        //lowers temp by -10
         for(int r = 0; r < geo.length; r++)
         {
             for(int c = 0; c < geo[r].length; c++)
@@ -467,13 +490,14 @@ public class GeoMap
 
     }
 
-
+    //creates rainforest
     public void rainforestGen()
     {
-
+        //up to 4 rainforests
         Random rand = new Random();
         int curve = rand.nextInt(5);
 
+        //grabs random rainforest tiles within climate
         for(int x = 0; x < curve; x++)
         {
                 outer:
@@ -498,6 +522,7 @@ public class GeoMap
                 }
         }
 
+        //runs up to 4 times, making the rainforests bigger -- has to be within climate and next to another rainforest and not desert
         int len = rand.nextInt(4);
         len += 1;
 
@@ -520,6 +545,7 @@ public class GeoMap
             }
         }
 
+        //fills in more rainforest
         for(int r = 0; r < geo.length; r++)
         {
             for(int c = 0; c < geo[r].length; c++)
@@ -531,15 +557,18 @@ public class GeoMap
             }
         }
 
-
     }
 
+    //normal forests
     public void tempForestGen()
     {
         Random rand = new Random();
+        //up to 7 forests
         int curve = rand.nextInt(7) + 1;
 
         int count = 0;
+
+        //only certain amount of tries for making forests -- grabs random tiles for generation
         touter:
         for(int l = 0; l < curve; l++)
         {
@@ -567,6 +596,7 @@ public class GeoMap
              }
         }
 
+        //loops 6 times, grabs tiles nearby that are in climate and next to forests
         for(int x = 0; x < 6; x++)
         {
             for(int r = 0; r < geo.length; r++)
@@ -587,7 +617,7 @@ public class GeoMap
             }
         }
 
-
+        //fills in more forest tiles
         for(int x = 0; x < 3; x++)
         {
             for(int r = 0; r < geo.length; r++)
@@ -603,24 +633,28 @@ public class GeoMap
         }
     }
 
-
+    //general method to fill in the map
     public void fillIn()
     {
+        //for each tile
         for(int r = 0; r < geo.length; r++)
         {
             for(int c = 0; c < geo[r].length; c++)
             {
+                //if a land tile and empty
                 if(MapGen.land.getElement(r, c) == 1 && geo[r][c] == 0)
                 {
+                    //could become buffer of rainforest and desert
                     if (nextTo(desert, r, c, 1) && nextTo(rainforest, r, c, 1))
                     {
                         geo[r][c] = plains;
                     }
+                    //could become forest around rainforests
                     else if(nextTo(rainforest, r, c, 2) && geo[r][c] == 0)
                     {
                         geo[r][c] = temperateforest;
                     }
-
+                    //could become a temperate forest with random luck
                     else if(nextTo(rainforest, r, c, 1))
                     {
                         if(Math.random() > .4)
@@ -628,7 +662,7 @@ public class GeoMap
                             geo[r][c] = temperateforest;
                         }
                     }
-
+                    //has a chance of becoming plains or grassland if next to exactly 2 desert tiles
                     else if(nextTo(desert, r, c, 1) && !nextTo(desert, r, c, 3))
                     {
                         if(Math.random() > .4)
@@ -640,6 +674,7 @@ public class GeoMap
                             geo[r][c] = grassland;
                         }
                     }
+                    //if temp is not too cold become plains the warmer it is, or just become grassland
                     else if(MapGen.climate.getClimate(r, c) >= 40)
                     {
                         float temp = MapGen.climate.getClimate(r, c);
@@ -661,7 +696,9 @@ public class GeoMap
                         {
                             geo[r][c] = grassland;
                         }
-                    } else if(MapGen.climate.getClimate(r, c) < 0)
+                    }
+                    //if it's really cold, become forest, hill, or grassland
+                    else if(MapGen.climate.getClimate(r, c) < 0)
                     {
                         float t = MapGen.climate.getClimate(r, c);
 
@@ -709,6 +746,7 @@ public class GeoMap
 
 
                     }
+                    //when all else fails, become grassland
                     else
                     {
                         geo[r][c] = grassland;
@@ -718,7 +756,7 @@ public class GeoMap
         }
 
 
-
+        //removes solo plains and grasslands, fills them into their opposites
         for(int r = 0; r < geo.length; r++)
         {
             for(int c = 0; c < geo[r].length; c++)
@@ -740,7 +778,7 @@ public class GeoMap
             }
         }
 
-
+        //fills in some desert tiles and surrounds them with plains
         for(int x = 0; x < 4; x++)
         {
             for(int r = 0; r < geo.length; r++)
@@ -781,6 +819,7 @@ public class GeoMap
                         }
                     }
 
+                    //its too cold to be grassland, become a hill or forest
                     else if(MapGen.climate.getClimate(r, c) < 0)
                     {
                         if(geo[r][c] == grassland)
@@ -816,15 +855,14 @@ public class GeoMap
                 }
             }
         }
-
-
     }
 
-
+    //checks if tile is next to type
 	public boolean nextTo(int type, int r, int c, int count)
 	{
 		int sum = 0;
-		
+
+        //adds one to sum if within bounds of map and tile to left, right, up, and down are the type denoted
 		if(r > 0)
 		{
 			if(geo[r-1][c] == type)
@@ -856,26 +894,36 @@ public class GeoMap
 				sum++;
 			}
 		}
-		
+
+        //if the sum of the tiles is greater or equal to the count given, its true
 		if(sum >= count)
 		{
 			return true;
 		}
-		
+		//or just false
 		return false;
 	}
 	
-	
-	public void drawGeo(Graphics g) {
-        for (int r = 0; r < geo.length; r++) {
-            for (int c = 0; c < geo[r].length; c++) {
-                if (geo[r][c] == ocean && MapGen.land.getElement(r, c) == 0) {
+	//draws geo map
+	public void drawGeo(Graphics g)
+    {
+        for (int r = 0; r < geo.length; r++)
+        {
+            for (int c = 0; c < geo[r].length; c++)
+            {
+                //if a water tile do this
+                if (geo[r][c] == ocean && MapGen.land.getElement(r, c) == 0)
+                {
                     g.setColor(new Color(0, 0, 97));
                     g.fillRect(r * 5, c * 5, 5, 5);
                     g.setColor(Color.gray);
                     g.drawRect(r * 5, c * 5, 5, 5);
-                } else {
-                    switch (geo[r][c]) {
+                }
+                //or just choose the color that matches the tile
+                else
+                {
+                    switch (geo[r][c])
+                    {
                         case beach:
                             g.setColor(new Color(250, 241, 177));
                             break;
@@ -921,6 +969,7 @@ public class GeoMap
                             break;
                     }
 
+                    //fill it in and give it a black outline
                     g.fillRect(r * 5, c * 5, 5, 5);
 
                     g.setColor(Color.black);
@@ -930,7 +979,7 @@ public class GeoMap
         }
     }
 	
-	
+	//clears the board, setting it all to 0's
 	private void clear()
 	{
 		for(int r = 0; r < geo.length; r++)
@@ -942,9 +991,10 @@ public class GeoMap
 		}
 	}
 
-
+    //saves geo
     public void saveGeo(String s) throws IOException
     {
+        //creates file
         File input = new File(s + "/geo.dat");
 
         if(!input.exists())
@@ -952,39 +1002,54 @@ public class GeoMap
             input.createNewFile();
         }
 
+        //writers are created
         FileWriter fw = new FileWriter(input);
         BufferedWriter bw = new BufferedWriter(fw);
 
+        //for each row
         for(int r = 0; r < geo.length; r++)
         {
+            //create string
             String saveline = "";
+            //for the column
             for(int c = 0; c < geo[r].length; c++)
             {
+                //seperate each value with an "x"
                 saveline = saveline + Integer.toString(geo[r][c]) + 'x';
             }
+            //write line to file
             bw.write(saveline);
+            //new line
             bw.newLine();
         }
 
+        //close writers
         bw.close();
         fw.close();
     }
 
+    //loads geo
     public void loadGeo(String s) throws IOException
     {
+        //grabs geo file
         File input = new File(s + "/geo.dat");
 
+        //creates reader objects
         FileReader fr = new FileReader(input);
         BufferedReader br = new BufferedReader(fr);
 
-
+        //for each row
         for(int r = 0; r < geo.length; r++)
         {
+            //load the line from the file
             String loadLine = br.readLine();
+            //turn it into a char array
             char[] ch = loadLine.toCharArray();
+            //x is the array pointer/tracker
             int x = 0;
             for(int c = 0; c < geo[r].length; c++)
             {
+                //creates string to grab values in between "x"
                 String text = "";
                 while(true)
                 {
@@ -999,18 +1064,19 @@ public class GeoMap
                     }
                     x++;
                 }
+                //turns the value into a number
                 geo[r][c] = Integer.parseInt(text);
             }
         }
 
+        //closes readers
         br.close();
         fr.close();
     }
-    
-    
+
+    //returns geo value
     public int getGeo(int r, int c)
     {
     	return geo[r][c];
     }
-	
 }
