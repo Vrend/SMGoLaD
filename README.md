@@ -5,6 +5,7 @@ Sid Meier's Game of Lords and Dragons (Please don't sue me)
 
 This is a final project for the AP Computer Science class I am taking at Wayland High School
 
+Note: This project is currently inactive until further notice.
 
 I plan to make a fully-functioning map generator with climates and geological features. After that, I hope to 
 build a functioning gui that tracks resources, and allows territories and cities on the map.
@@ -19,10 +20,11 @@ This project uses the following libraries: Slick2d, lwjgl, jinput, and lwjgl_uti
 Progress:
 
 - land generation
-- rudimentary climate system
+- Rudimentary climate system
 - Many geographic features (some modify climate)
-- Incomplete resource generation
-- Save system which accepts names (doesn't support resources yet)
-- Load system which displays 8 saves (doesn't support resources yet)
+- Resource generation
+- Save system which accepts names
+- Load system which displays 8 saves
 - Main menu with music and fade on close
 - land is generated with the "r" button
+- Rudimentary structure for game and units
