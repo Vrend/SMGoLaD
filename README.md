@@ -3,16 +3,11 @@ Sid Meier's Game of Lords and Dragons (Please don't sue me)
 
 
 
-This is a final project for the AP Computer Science class I am taking at Wayland High School
+This is a final project for the AP Computer Science class I was taking.
 
-Note: This project is currently inactive until further notice.
-
-I plan to make a fully-functioning map generator with climates and geological features. After that, I hope to 
-build a functioning gui that tracks resources, and allows territories and cities on the map.
+Note: This project is inactive.
 
 
-
-Any questions, concerns, etc contact me at johnbroderick1234@live.com with the subject "Github SMGoLaD"
 
 
 This project uses the following libraries: Slick2d, lwjgl, jinput, and lwjgl_util
